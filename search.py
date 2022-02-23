@@ -13,7 +13,7 @@ class Document:
         self.text = text
 
     def format(self, query):
-        # возвращает пару тайтл-текст, отформатированную под запрос
+        # РІРѕР·РІСЂР°С‰Р°РµС‚ РїР°СЂСѓ С‚Р°Р№С‚Р»-С‚РµРєСЃС‚, РѕС‚С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРЅСѓСЋ РїРѕРґ Р·Р°РїСЂРѕСЃ
         return [self.title, self.text + ' ...']
 
 
@@ -53,7 +53,7 @@ def build_index(index=index, reverse_index=reverse_index, tf_idf_vectorizer=tf_i
     def build_document(id):
         return Document(df['name'][id], df['item_description'][id])
     
-    # считывает данные и строит индекс
+    # СЃС‡РёС‚С‹РІР°РµС‚ РґР°РЅРЅС‹Рµ Рё СЃС‚СЂРѕРёС‚ РёРЅРґРµРєСЃ
     df = pd.read_csv('train.tsv', sep='\t')
     delete = ['train_id', 'item_condition_id', 'category_name', 'brand_name', 'price', 'shipping']
     df = df.drop(columns=delete)
@@ -77,8 +77,8 @@ def build_index(index=index, reverse_index=reverse_index, tf_idf_vectorizer=tf_i
 
 
 def score(query, document):
-    # возвращает скор для пары запрос-документ
-    # больше -- релевантнее
+    # РІРѕР·РІСЂР°С‰Р°РµС‚ СЃРєРѕСЂ РґР»СЏ РїР°СЂС‹ Р·Р°РїСЂРѕСЃ-РґРѕРєСѓРјРµРЅС‚
+    # Р±РѕР»СЊС€Рµ -- СЂРµР»РµРІР°РЅС‚РЅРµРµ
     query_tf_idf = tf_idf_vectorizer.transform([query]).todense()
     document_tf_idf = tf_idf_vectorizer.transform([document.title + " " + document.text]).todense()
     len_query = (np.array(query_tf_idf)[0] ** 2).sum()
@@ -90,8 +90,8 @@ def score(query, document):
 
 
 def retrieve(query, reverse_index=reverse_index):
-    # возвращает начальный список релевантных документов
-    # реализация инвертированного индекса
+    # РІРѕР·РІСЂР°С‰Р°РµС‚ РЅР°С‡Р°Р»СЊРЅС‹Р№ СЃРїРёСЃРѕРє СЂРµР»РµРІР°РЅС‚РЅС‹С… РґРѕРєСѓРјРµРЅС‚РѕРІ
+    # СЂРµР°Р»РёР·Р°С†РёСЏ РёРЅРІРµСЂС‚РёСЂРѕРІР°РЅРЅРѕРіРѕ РёРЅРґРµРєСЃР°
     words = list(set(text_lemmatizer(query).split()))
     indicators = {}
     for word in words:
